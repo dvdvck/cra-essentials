@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
 import {useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import {postUpdated} from './postsSlice'
+import { selectAllUsers } from '../users/userSlice'
+import {postUpdated, selectPostById} from './postsSlice'
 
 export const EditPostForm = ({match})=>{
   const {postId} = match.params
-  const post = useSelector(state=> state.posts.find(post=> post.id === postId))
+  const post = useSelector(selectPostById(postId))
+/*  
   if(!post){
-    throw window.Error('No post found beaaatttch')
+    return (
+    <section>
+      <h2>No post found</h2>
+    </section>
+    )
   }
-
+*/
   const [title, setTitle] = useState(post.title)
   const [content, setContent] = useState(post.content)
   const [userId, setUserId] = useState(post.userId);
@@ -26,7 +32,7 @@ export const EditPostForm = ({match})=>{
   const history = useHistory()
   const canSave = !!title && !!content && !!userId;
 
-  const users = useSelector(state=> state.users)
+  const users = useSelector(selectAllUsers)
   const optionsUsers = users.map(user=>{
     return (
       <option key={user.id} value={user.id}>{user.name}</option>
@@ -51,7 +57,7 @@ export const EditPostForm = ({match})=>{
           <option value=""></option>
           {optionsUsers}
         </select>
-      </label>
+        </label>
         <button className="button raised-button" type="button" disabled={!canSave} onClick={handleClick}>Update</button>
       </form>
     </section>

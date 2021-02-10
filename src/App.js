@@ -23,12 +23,12 @@ function App() {
             path="/"
             render={() => (
               <React.Fragment>
-                <AddPostForm />
                 <PostList />
               </React.Fragment>
               
             )}
           />
+          <Route exact path="/posts/add" component={AddPostForm} />
           <Route exact path="/post/:postId" component={SinglePostPage} />
           <Route exact path="/editPost/:postId" component={EditPostForm} />
           <Redirect to="/" />
