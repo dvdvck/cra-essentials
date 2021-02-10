@@ -6,7 +6,7 @@ import {postUpdated, selectPostById} from './postsSlice'
 
 export const EditPostForm = ({match})=>{
   const {postId} = match.params
-  const post = useSelector(selectPostById(postId))
+  const post = useSelector(state=> selectPostById(state, postId))
 /*  
   if(!post){
     return (
@@ -18,7 +18,7 @@ export const EditPostForm = ({match})=>{
 */
   const [title, setTitle] = useState(post.title)
   const [content, setContent] = useState(post.content)
-  const [userId, setUserId] = useState(post.userId);
+  const [userId, setUserId] = useState(post.user);
 
   const onTitleChanged = e=>{
     setTitle(e.target.value)
